@@ -30,20 +30,20 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
           
       - name: Terraform Init
-        working-directory: devops-springboot-infra/terraform/envs/dev
+        working-directory: terraform/envs/dev
         run: terraform init
         
       - name: Terraform Plan
-        working-directory: devops-springboot-infra/terraform/envs/dev
+        working-directory: terraform/envs/dev
         run: terraform plan
         
       - name: Terraform Apply
-        working-directory: devops-springboot-infra/terraform/envs/dev
+        working-directory: terraform/envs/dev
         run: terraform apply -auto-approve
         
       - name: Extract Outputs (Private Key & EC2 IP)
         id: outputs
-        working-directory: devops-springboot-infra/terraform/envs/dev
+        working-directory: terraform/envs/dev
         run: |
           terraform output -raw private_key_pem > private_key.pem
           echo "ec2_ip=$(terraform output -raw ec2_public_ip)" >> $GITHUB_OUTPUT
@@ -103,9 +103,9 @@ jobs:
           terraform_version: ${{ env.TF_VERSION }}
           
       - name: Terraform Init
-        working-directory: devops-springboot-infra/terraform/envs/dev
+        working-directory: terraform/envs/dev
         run: terraform init
         
       - name: Terraform Destroy
-        working-directory: devops-springboot-infra/terraform/envs/dev
+        working-directory: terraform/envs/dev
         run: terraform destroy -auto-approve
